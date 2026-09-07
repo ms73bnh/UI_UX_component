@@ -33,21 +33,22 @@ interface SidebarProps {
   isFavoritesFilterActive?: boolean;
 }
 
-const CATEGORY_ITEMS: { name: CategoryGroup; icon: any }[] = [
-  { name: 'Actions', icon: MousePointerClick },
-  { name: 'Input', icon: TextCursorInput },
-  { name: 'Selection', icon: CheckSquare },
-  { name: 'Date & Time', icon: CalendarDays },
-  { name: 'Navigation', icon: Navigation },
-  { name: 'Overlay', icon: Layers },
-  { name: 'Lists & Cards', icon: LayoutGrid },
-  { name: 'Search & Filter', icon: Search },
-  { name: 'Feedback & States', icon: AlertCircle },
+const CATEGORY_ITEMS: { id: CategoryGroup; name: string; icon: any }[] = [
+  { id: 'Actions', name: 'Actions', icon: MousePointerClick },
+  { id: 'Input', name: 'Input', icon: TextCursorInput },
+  { id: 'Selection', name: 'Selection', icon: CheckSquare },
+  { id: 'Date & Time', name: 'Date & Time', icon: CalendarDays },
+  { id: 'Navigation', name: 'Navigation', icon: Navigation },
+  { id: 'Overlay', name: 'Overlay', icon: Layers },
+  { id: 'Lists & Cards', name: 'Lists & Cards', icon: LayoutGrid },
+  { id: 'Search & Filter', name: 'Search & Filter', icon: Search },
+  { id: 'Feedback & States', name: 'Feedback & States', icon: AlertCircle },
 ];
 
-const INTERACTION_ITEMS = [
-  { name: 'Gestures', icon: Touchpad },
-  { name: 'Motion Patterns', icon: Sparkles },
+const INTERACTION_ITEMS: { id: CategoryGroup; name: string; icon: any }[] = [
+  { id: 'Gesture', name: 'Gestures', icon: Touchpad },
+  { id: 'Motion', name: 'Motion', icon: Sparkles },
+  { id: 'Patterns', name: 'Patterns', icon: Boxes },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -63,6 +64,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const handleCategoryClick = (cat: CategoryGroup | null) => {
     onSelectCategory?.(cat);
+    if (cat) {
+      router.push(`/?category=${encodeURIComponent(cat)}`);
+    } else {
+      router.push('/');
+    }
     if (isOpen) onClose?.();
   };
 
@@ -108,8 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-none">
         {/* All Components */}
         <div>
-          <Link
-            href="/"
+          <button
             onClick={() => handleCategoryClick(null)}
             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer ${
               selectedCategory === null && pathname === '/' && !isFavoritesFilterActive
@@ -118,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }`}
           >
             <span>전체 컴포넌트</span>
-          </Link>
+          </button>
         </div>
 
         {/* AI Tools */}
@@ -163,11 +168,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="space-y-1">
             {CATEGORY_ITEMS.map((item) => {
               const Icon = item.icon;
-              const isSelected = selectedCategory === item.name && !isFavoritesFilterActive;
+              const isSelected = selectedCategory === item.id && !isFavoritesFilterActive;
               return (
                 <button
-                  key={item.name}
-                  onClick={() => handleCategoryClick(item.name)}
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30'
@@ -192,14 +197,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="space-y-1">
             {INTERACTION_ITEMS.map((item) => {
               const Icon = item.icon;
+              const isSelected = selectedCategory === item.id && !isFavoritesFilterActive;
               return (
                 <button
-                  key={item.name}
-                  onClick={() => handleCategoryClick(item.name as CategoryGroup)}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30'
+                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                  }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span>{item.name}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4" />
+                    <span>{item.name}</span>
+                  </div>
                 </button>
               );
             })}

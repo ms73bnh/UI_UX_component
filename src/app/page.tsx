@@ -35,14 +35,21 @@ function GalleryContent() {
     searchQuery: '',
   });
 
-  // Sync favoritesOnly when URL query changes
+  const categoryParam = searchParams.get('category') as CategoryGroup | null;
+
+  // Sync category and favorites when URL query changes
   useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      setFilters((prev) => ({ ...prev, categories: [], favoritesOnly: false }));
+    } else if (!categoryParam && selectedCategory && !isFavoritesParam) {
+      setSelectedCategory(null);
+    }
+
     if (isFavoritesParam && !filters.favoritesOnly) {
       setFilters((prev) => ({ ...prev, favoritesOnly: true }));
-    } else if (!isFavoritesParam && filters.favoritesOnly && !filters.platforms.length && !filters.priorities.length && !filters.categories.length && !filters.searchQuery) {
-      // Keep state in sync
     }
-  }, [isFavoritesParam]);
+  }, [categoryParam, isFavoritesParam]);
 
   const toggleCompare = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -75,7 +82,7 @@ function GalleryContent() {
       searchQuery: '',
     });
     setSelectedCategory(null);
-    if (isFavoritesParam) {
+    if (isFavoritesParam || categoryParam) {
       router.push('/');
     }
   };

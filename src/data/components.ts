@@ -259,6 +259,20 @@ export const COMPONENTS: ComponentItem[] = [
     promptTemplate: `INPUT-08 File Dropzone 구현`,
     codeSnippets: { react: `export const FileDropzone = () => <div className="border-2 border-dashed rounded-2xl p-6 text-center text-xs">Drop files here</div>;` }
   },
+  {
+    id: 'INPUT-09',
+    name: 'Credit Card 3D Flip Form',
+    category: 'Input',
+    description: '카드 번호 4자리 자동 띄어쓰기 및 CVC 입력 시 3D 신용카드가 회전하는 포맷터 폼',
+    platform: 'Both',
+    priority: 'P0',
+    promptBuilderTags: ['input', 'credit-card', 'card-flip', 'payment-input'],
+    interactions: ['Auto Space Formatting', '3D Card Flip Motion', 'CVC Security Focus'],
+    usage: ['쇼핑몰 신용카드 결제 폼, 구독 결제수단 등록'],
+    avoid: ['단순 일반 텍스트 입력'],
+    promptTemplate: `INPUT-09 Credit Card 3D Flip Form을 구현한다.\n- 16자리 카드번호 4자리 자동 포맷팅\n- CVC 포커스 시 3D 회전 카드 뒷면 전환`,
+    codeSnippets: { react: `export const CreditCardForm = () => <div className="p-4 border rounded-2xl">Credit Card Form</div>;` }
+  },
 
   // --- SELECTION (10) ---
   {
@@ -472,6 +486,20 @@ export const COMPONENTS: ComponentItem[] = [
     avoid: ['단일 일자 선택'],
     promptTemplate: `DATE-11 Time Range Slider 구현`,
     codeSnippets: { react: `export const TimeRangeSlider = () => <div className="w-full p-4 border rounded-xl">09:00 ───[ 11:00 ~ 15:00 ]─── 22:00</div>;` }
+  },
+  {
+    id: 'DATE-12',
+    name: 'iOS Wheel Scroll Picker',
+    category: 'Date & Time',
+    description: '손가락/마우스 수직 드래그 스크롤로 돌려 시간/숫자를 선택하는 iOS 드럼 휠 피커',
+    platform: 'Mobile',
+    priority: 'P0',
+    promptBuilderTags: ['date-time', 'ios-wheel-picker', 'scroll-drum', 'wheel-time'],
+    interactions: ['Vertical Drag Scroll', 'Snap Center Select', 'AM/PM Wheel Toggle'],
+    usage: ['모바일 알람 시계, 모바일 기기 시:분 시간 설정'],
+    avoid: ['데스크톱 모니터 긴 폼'],
+    promptTemplate: `DATE-12 iOS Wheel Scroll Picker를 구현한다.\n- Vertical drag wheel scroll drum\n- Snap center item selection\n- Hour/Minute/AM-PM 3열 휠 스크롤`,
+    codeSnippets: { react: `export const WheelPicker = () => <div className="h-40 border rounded-3xl overflow-y-auto font-mono">Wheel Drum Picker</div>;` }
   },
 
   // --- NAVIGATION (6) ---
@@ -976,6 +1004,34 @@ export const COMPONENTS: ComponentItem[] = [
     avoid: ['고정형 정적 숫자'],
     promptTemplate: `MOTION-09 Animated Currency & Number Ticker 구현`,
     codeSnippets: { react: `export const NumberTicker = ({ value }) => <span className="font-mono text-3xl font-extrabold">$ {value}</span>;` }
+  },
+  {
+    id: 'MOTION-10',
+    name: 'Infinite Auto Marquee Banner',
+    category: 'Motion',
+    description: '파트너사 로고나 리뷰 카드가 끊김 없이 수평 무한 스크롤 롤링되는 마키 배너',
+    platform: 'Both',
+    priority: 'P0',
+    promptBuilderTags: ['motion', 'infinite-marquee', 'magic-ui', 'rolling-banner'],
+    interactions: ['Continuous Infinite Loop Scroll'],
+    usage: ['랜딩페이지 고객 후기, 파트너사 브랜드 로고 배너'],
+    avoid: ['단순 정적 그리드'],
+    promptTemplate: `MOTION-10 Infinite Auto Marquee Banner를 구현한다.\n- Magic UI 스타일 무한 롤링 수평 스크롤`,
+    codeSnippets: { react: `export const InfiniteMarquee = () => <div className="flex gap-4 overflow-hidden">Infinite Marquee Banner</div>;` }
+  },
+  {
+    id: 'MOTION-11',
+    name: 'Animated macOS Dock Bar',
+    category: 'Motion',
+    description: '마우스 위치에 따라 호버 아이콘과 양옆 아이콘이 유기적으로 크게 확대되는 애플 Dock 네비게이션',
+    platform: 'Both',
+    priority: 'P0',
+    promptBuilderTags: ['motion', 'macos-dock', 'magnification-dock', 'apple-ui'],
+    interactions: ['Cursor Proximity Magnification', 'Spring Scale Bounce'],
+    usage: ['고급 메인 대시보드 네비게이션 Dock'],
+    avoid: ['단순 정적 아이콘 바'],
+    promptTemplate: `MOTION-11 Animated macOS Dock Bar를 구현한다.\n- Cursor proximity magnification effect`,
+    codeSnippets: { react: `export const AnimatedDock = () => <div className="flex items-end gap-3 p-3 bg-black rounded-3xl">macOS Dock Bar</div>;` }
   },
 
   // --- PATTERNS (3) ---
