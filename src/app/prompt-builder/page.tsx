@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { COMPONENTS } from '@/data/components';
@@ -19,7 +19,49 @@ import {
   Square,
   RotateCcw,
   Zap,
+  BookmarkPlus,
+  LayoutList,
 } from 'lucide-react';
+
+interface PresetBundle {
+  id: string;
+  name: string;
+  goal: string;
+  componentIds: string[];
+}
+
+const PRESET_BUNDLES: PresetBundle[] = [
+  {
+    id: 'auth',
+    name: '온보딩 & 로그인',
+    goal: '사용자 회원가입 및 소셜 로그인 온보딩 화면',
+    componentIds: ['INPUT-01', 'ACT-01', 'OVER-01', 'SELECT-03'],
+  },
+  {
+    id: 'commerce',
+    name: '커머스 & 결제',
+    goal: '상품 수량 조절 및 아코디언 옵션 결제 화면',
+    componentIds: ['LIST-02', 'SELECT-07', 'ACT-01', 'OVER-03', 'FEED-02'],
+  },
+  {
+    id: 'social',
+    name: 'SNS & 피드',
+    goal: '스와이프 리스트 및 검색 피드 메인 화면',
+    componentIds: ['LIST-01', 'GEST-04', 'SEARCH-01', 'ACT-07', 'LIST-06'],
+  },
+  {
+    id: 'dashboard',
+    name: '대시보드 & 관리자',
+    goal: '사이드바 내비게이션 및 세그먼트 필터 대시보드',
+    componentIds: ['NAV-05', 'SEARCH-04', 'SELECT-04', 'FEED-04', 'NAV-06'],
+  },
+  {
+    id: 'reservation',
+    name: '일정 & 예약',
+    goal: '날짜 가로 스크롤 및 시간 피커 병원/헤어샵 예약 화면',
+    componentIds: ['DATE-04', 'DATE-08', 'ACT-01', 'FEED-02', 'OVER-03'],
+  },
+];
 
 function PromptBuilderContent() {
   const searchParams = useSearchParams();
@@ -37,6 +79,11 @@ function PromptBuilderContent() {
   const [copied, setCopied] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+
+  const applyPreset = (preset: PresetBundle) => {
+    setScreenGoal(preset.goal);
+    setSelectedIds(preset.componentIds);
+  };
 
   const toggleSelect = (id: string) => {
     if (selectedIds.includes(id)) {
@@ -147,6 +194,25 @@ ${componentDetails}
             </div>
           </div>
 
+          {/* Preset App Templates Bar */}
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 shadow-xs space-y-2">
+            <div className="flex items-center gap-2">
+              <BookmarkPlus className="w-4 h-4 text-indigo-500" />
+              <h3 className="font-bold text-xs text-gray-900 dark:text-white">추천 프리셋 앱 템플릿:</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {PRESET_BUNDLES.map((preset) => (
+                <button
+                  key={preset.id}
+                  onClick={() => applyPreset(preset)}
+                  className="px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition-all border border-indigo-200 dark:border-indigo-900/60 cursor-pointer"
+                >
+                  ⚡ {preset.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Main 2-Column Builder Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Left Column: Config & Selection */}
@@ -250,6 +316,25 @@ ${componentDetails}
                   })}
                 </div>
               </div>
+
+              {/* Layout Order Outline */}
+              {selectedComponents.length > 0 && (
+                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 shadow-xs space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-gray-200">
+                    <LayoutList className="w-4 h-4 text-indigo-500" />
+                    <span>화면 수직 구성 순서 (Vertical Layout Flow):</span>
+                  </div>
+                  <div className="flex flex-col gap-1.5 pt-1">
+                    {selectedComponents.map((c, i) => (
+                      <div key={c!.id} className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-800 text-xs font-medium border border-gray-200/60 dark:border-gray-700">
+                        <span className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-mono font-bold">{i + 1}</span>
+                        <span className="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{c!.id}</span>
+                        <span className="text-gray-800 dark:text-gray-200">{c!.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Column: Generated Master Prompt Output */}

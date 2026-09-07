@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Star, Smartphone, Monitor, Layers, Plus, Check, Columns3 } from 'lucide-react';
 import { ComponentItem } from '@/types/component';
+import { ComponentCardPreview } from './ComponentCardPreview';
 
 interface ComponentCardProps {
   component: ComponentItem;
@@ -85,30 +86,9 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           {component.description}
         </p>
 
-        {/* Mini Preview Box */}
-        <div className="my-4 py-3 px-3 bg-slate-50 dark:bg-gray-950 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center justify-center min-h-[72px]">
-          {component.id === 'DATE-04' ? (
-            <div className="flex gap-1.5 overflow-hidden w-full justify-center">
-              <div className="w-8 h-12 rounded-lg bg-gray-200 dark:bg-gray-800 flex flex-col items-center justify-center text-[10px] text-gray-500 font-semibold">월5</div>
-              <div className="w-8 h-12 rounded-lg bg-blue-600 text-white flex flex-col items-center justify-center text-[10px] font-bold shadow-xs">화6</div>
-              <div className="w-8 h-12 rounded-lg bg-gray-200 dark:bg-gray-800 flex flex-col items-center justify-center text-[10px] text-gray-500 font-semibold">수7</div>
-              <div className="w-8 h-12 rounded-lg bg-gray-200 dark:bg-gray-800 flex flex-col items-center justify-center text-[10px] text-gray-500 font-semibold">목8</div>
-            </div>
-          ) : component.id === 'ACT-01' ? (
-            <div className="w-full py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg text-center shadow-xs">
-              Primary Button
-            </div>
-          ) : component.id === 'OVER-03' ? (
-            <div className="w-full h-12 bg-gray-200 dark:bg-gray-800 rounded-t-xl flex flex-col items-center justify-start pt-1 border-t-2 border-blue-500">
-              <div className="w-6 h-1 bg-gray-400 rounded-full" />
-              <span className="text-[10px] text-gray-500 mt-1 font-semibold">Bottom Sheet</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
-              <Layers className="w-4 h-4 text-blue-500" />
-              <span>Interactive Preview</span>
-            </div>
-          )}
+        {/* Dynamic Card Live Component Preview */}
+        <div className="my-4 py-3 px-3 bg-slate-50 dark:bg-gray-950 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center justify-center min-h-[72px] overflow-hidden">
+          <ComponentCardPreview component={component} />
         </div>
       </Link>
 
