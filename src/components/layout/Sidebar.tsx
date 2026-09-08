@@ -25,6 +25,12 @@ import {
   LayoutDashboard,
   MessageCircle,
   ShoppingBag,
+  TrendingUp,
+  ShieldCheck,
+  ClipboardList,
+  Eye,
+  Bot,
+  Play,
 } from 'lucide-react';
 import { CategoryGroup } from '@/types/component';
 
@@ -60,6 +66,12 @@ const EXTENDED_ITEMS: { id: CategoryGroup; name: string; icon: any }[] = [
   { id: 'Layout', name: 'Layout', icon: LayoutDashboard },
   { id: 'Communication', name: 'Communication', icon: MessageCircle },
   { id: 'Commerce', name: 'Commerce', icon: ShoppingBag },
+  { id: 'Charts', name: 'Charts', icon: TrendingUp },
+  { id: 'Auth & Security', name: 'Auth & Security', icon: ShieldCheck },
+  { id: 'Forms', name: 'Forms', icon: ClipboardList },
+  { id: 'Accessibility', name: 'Accessibility', icon: Eye },
+  { id: 'AI/ML UX', name: 'AI/ML UX', icon: Bot },
+  { id: 'Media', name: 'Media', icon: Play },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({

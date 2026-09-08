@@ -19,7 +19,11 @@ export type CategoryGroup =
   | 'Communication'
   | 'Commerce'
   | 'Charts'
-  | 'Auth & Security';
+  | 'Auth & Security'
+  | 'Forms'
+  | 'Accessibility'
+  | 'AI/ML UX'
+  | 'Media';
 
 export interface CodeSnippets {
   react: string;
