@@ -21,6 +21,10 @@ import {
   Zap,
   Wand2,
   Columns3,
+  BarChart3,
+  LayoutDashboard,
+  MessageCircle,
+  ShoppingBag,
 } from 'lucide-react';
 import { CategoryGroup } from '@/types/component';
 
@@ -49,6 +53,13 @@ const INTERACTION_ITEMS: { id: CategoryGroup; name: string; icon: any }[] = [
   { id: 'Gesture', name: 'Gestures', icon: Touchpad },
   { id: 'Motion', name: 'Motion', icon: Sparkles },
   { id: 'Patterns', name: 'Patterns', icon: Boxes },
+];
+
+const EXTENDED_ITEMS: { id: CategoryGroup; name: string; icon: any }[] = [
+  { id: 'Data Display', name: 'Data Display', icon: BarChart3 },
+  { id: 'Layout', name: 'Layout', icon: LayoutDashboard },
+  { id: 'Communication', name: 'Communication', icon: MessageCircle },
+  { id: 'Commerce', name: 'Commerce', icon: ShoppingBag },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -196,6 +207,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </h2>
           <div className="space-y-1">
             {INTERACTION_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const isSelected = selectedCategory === item.id && !isFavoritesFilterActive;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleCategoryClick(item.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30'
+                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4" />
+                    <span>{item.name}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Extended Categories */}
+        <div>
+          <h2 className="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+            Extended
+          </h2>
+          <div className="space-y-1">
+            {EXTENDED_ITEMS.map((item) => {
               const Icon = item.icon;
               const isSelected = selectedCategory === item.id && !isFavoritesFilterActive;
               return (

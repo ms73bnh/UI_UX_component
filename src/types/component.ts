@@ -13,7 +13,13 @@ export type CategoryGroup =
   | 'Feedback & States'
   | 'Gesture'
   | 'Motion'
-  | 'Patterns';
+  | 'Patterns'
+  | 'Data Display'
+  | 'Layout'
+  | 'Communication'
+  | 'Commerce'
+  | 'Charts'
+  | 'Auth & Security';
 
 export interface CodeSnippets {
   react: string;
